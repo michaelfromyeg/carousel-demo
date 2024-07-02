@@ -2,31 +2,28 @@ import React from 'react';
 import './App.css';
 
 const App = () => {
+  const carouselRef = React.useRef(null);
+
   const scrollLeft = () => {
-    const carousel = document.querySelector('.carousel');
-    carousel.scrollBy({ left: -carousel.offsetWidth, behavior: 'smooth' });
+    const carousel = carouselRef.current;
+    const visibleWidth = carousel.offsetWidth;
+    carousel.scrollBy({ left: -visibleWidth, behavior: 'smooth' });
   };
 
   const scrollRight = () => {
-    const carousel = document.querySelector('.carousel');
-    carousel.scrollBy({ left: carousel.offsetWidth, behavior: 'smooth' });
+    const carousel = carouselRef.current;
+    const visibleWidth = carousel.offsetWidth;
+    carousel.scrollBy({ left: visibleWidth, behavior: 'smooth' });
   };
 
   return (
     <div className="carousel-container">
       <button className="carousel-button left" onClick={scrollLeft}>‹</button>
-      <div className="carousel">
+      <div className="carousel" ref={carouselRef}>
         <div className="carousel-content">
-          <div className="carousel-item">Item 1</div>
-          <div className="carousel-item">Item 2</div>
-          <div className="carousel-item">Item 3</div>
-          <div className="carousel-item">Item 4</div>
-          <div className="carousel-item">Item 5</div>
-          <div className="carousel-item">Item 6</div>
-          <div className="carousel-item">Item 7</div>
-          <div className="carousel-item">Item 8</div>
-          <div className="carousel-item">Item 9</div>
-          <div className="carousel-item">Item 10</div>
+          {Array.from({ length: 20 }).map((_, index) => (
+            <div key={index} className="carousel-item">Item {index + 1}</div>
+          ))}
         </div>
       </div>
       <button className="carousel-button right" onClick={scrollRight}>›</button>
